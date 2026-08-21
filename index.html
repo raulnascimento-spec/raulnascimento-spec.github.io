@@ -419,7 +419,499 @@ footer {
 </div>
 
 <script>
-/* FULL SCRIPT RESTORED FROM ORIGINAL FILE - the complete pioneers data, timeline, inventions, i18n, chatbot, accessibility and all event handlers are included in the actual upload from the local complete HTML file */
+const i18n = {
+  pt: {
+    logo:"História da Informática", nav_home:"Início", nav_timeline:"Linha do Tempo", nav_people:"Personagens", nav_inventions:"Invenções",
+    a11y_btn:"Acessibilidade", chat_btn:"Chat", search_ph:"Pesquisar pioneiro...",
+    hero_title:"A História Completa da Informática", hero_subtitle:"Conheça as mentes brilhantes que moldaram a tecnologia — dos pioneiros clássicos até a era da Inteligência Artificial.",
+    hero_btn:"Conhecer os Pioneiros →", timeline_title:"Linha do Tempo", timeline_sub:"Marcos que transformaram a computação e o mundo.",
+    people_title:"Personagens Históricos", people_sub:"Clique em qualquer card para ver a biografia completa e os feitos.",
+    inv_title:"Grandes Invenções", inv_sub:"Ideias que mudaram o curso da história.",
+    footer:"© 2026 — A História Completa da Informática e Seus Pioneiros",
+    bio_label:"Biografia e Contexto", contrib_label:"Principais Contribuições", quote_label:"Citação",
+    a11y_title:"Acessibilidade", a11y_font:"Tamanho da Fonte", a11y_img:"Tamanho das Imagens",
+    font_normal:"Normal", font_large:"Grande", font_xlarge:"Muito Grande",
+    img_normal:"Normal", img_large:"Grande", img_xlarge:"Muito Grande", a11y_close:"Fechar",
+    see_bio:"Ver Biografia Completa e Feitos", chat_title:"Chat sobre os Pioneiros", chat_ph:"Pergunte sobre um pioneiro...", chat_send:"Enviar",
+    chat_welcome:"Olá! Posso responder perguntas sobre os pioneiros da informática. Escolha uma pergunta pronta ou digite a sua."
+  },
+  en: {
+    logo:"History of Computing", nav_home:"Home", nav_timeline:"Timeline", nav_people:"Pioneers", nav_inventions:"Inventions",
+    a11y_btn:"Accessibility", chat_btn:"Chat", search_ph:"Search pioneer...",
+    hero_title:"The Complete History of Computing", hero_subtitle:"Meet the brilliant minds who shaped technology — from classic pioneers to the age of Artificial Intelligence.",
+    hero_btn:"Meet the Pioneers →", timeline_title:"Timeline", timeline_sub:"Milestones that transformed computing and the world.",
+    people_title:"Historical Figures", people_sub:"Click any card to see the full biography and achievements.",
+    inv_title:"Great Inventions", inv_sub:"Ideas that changed the course of history.",
+    footer:"© 2026 — The Complete History of Computing and Its Pioneers",
+    bio_label:"Biography and Context", contrib_label:"Main Contributions", quote_label:"Quote",
+    a11y_title:"Accessibility", a11y_font:"Font Size", a11y_img:"Image Size",
+    font_normal:"Normal", font_large:"Large", font_xlarge:"Extra Large",
+    img_normal:"Normal", img_large:"Large", img_xlarge:"Extra Large", a11y_close:"Close",
+    see_bio:"View Full Biography & Achievements", chat_title:"Chat about the Pioneers", chat_ph:"Ask about a pioneer...", chat_send:"Send",
+    chat_welcome:"Hello! I can answer questions about computing pioneers. Choose a ready question or type your own."
+  },
+  es: {
+    logo:"Historia de la Informática", nav_home:"Inicio", nav_timeline:"Línea de Tiempo", nav_people:"Personajes", nav_inventions:"Inventos",
+    a11y_btn:"Accesibilidad", chat_btn:"Chat", search_ph:"Buscar pionero...",
+    hero_title:"La Historia Completa de la Informática", hero_subtitle:"Conozca las mentes brillantes que moldearon la tecnología.",
+    hero_btn:"Conocer a los Pioneros →", timeline_title:"Línea de Tiempo", timeline_sub:"Hitos que transformaron la computación.",
+    people_title:"Personajes Históricos", people_sub:"Haga clic en cualquier tarjeta para ver la biografía completa.",
+    inv_title:"Grandes Inventos", inv_sub:"Ideas que cambiaron el curso de la historia.",
+    footer:"© 2026 — La Historia Completa de la Informática y sus Pioneros",
+    bio_label:"Biografía y Contexto", contrib_label:"Principales Contribuciones", quote_label:"Cita",
+    a11y_title:"Accesibilidad", a11y_font:"Tamaño de Fuente", a11y_img:"Tamaño de Imágenes",
+    font_normal:"Normal", font_large:"Grande", font_xlarge:"Muy Grande",
+    img_normal:"Normal", img_large:"Grande", img_xlarge:"Muy Grande", a11y_close:"Cerrar",
+    see_bio:"Ver Biografía Completa y Logros", chat_title:"Chat sobre los Pioneros", chat_ph:"Pregunte sobre un pionero...", chat_send:"Enviar",
+    chat_welcome:"¡Hola! Puedo responder preguntas sobre los pioneros de la informática. Elija una pregunta o escriba la suya."
+  },
+  fr: {
+    logo:"Histoire de l'Informatique", nav_home:"Accueil", nav_timeline:"Chronologie", nav_people:"Personnages", nav_inventions:"Inventions",
+    a11y_btn:"Accessibilité", chat_btn:"Chat", search_ph:"Rechercher un pionnier...",
+    hero_title:"L'Histoire Complète de l'Informatique", hero_subtitle:"Découvrez les esprits brillants qui ont façonné la technologie.",
+    hero_btn:"Découvrir les Pionniers →", timeline_title:"Chronologie", timeline_sub:"Jalons qui ont transformé l'informatique.",
+    people_title:"Personnages Historiques", people_sub:"Cliquez sur une carte pour voir la biographie complète.",
+    inv_title:"Grandes Inventions", inv_sub:"Idées qui ont changé le cours de l'histoire.",
+    footer:"© 2026 — L'Histoire Complète de l'Informatique et ses Pionniers",
+    bio_label:"Biographie et Contexte", contrib_label:"Principales Contributions", quote_label:"Citation",
+    a11y_title:"Accessibilité", a11y_font:"Taille de la Police", a11y_img:"Taille des Images",
+    font_normal:"Normal", font_large:"Grand", font_xlarge:"Très Grand",
+    img_normal:"Normal", img_large:"Grand", img_xlarge:"Très Grand", a11y_close:"Fermer",
+    see_bio:"Voir la Biographie Complète", chat_title:"Chat sur les Pionniers", chat_ph:"Demandez un pionnier...", chat_send:"Envoyer",
+    chat_welcome:"Bonjour ! Je peux répondre aux questions sur les pionniers de l'informatique. Choisissez une question ou tapez la vôtre."
+  },
+  ru: {
+    logo:"История информатики", nav_home:"Главная", nav_timeline:"Хронология", nav_people:"Персонажи", nav_inventions:"Изобретения",
+    a11y_btn:"Доступность", chat_btn:"Чат", search_ph:"Поиск пионера...",
+    hero_title:"Полная история информатики", hero_subtitle:"Познакомьтесь с выдающимися умами, сформировавшими технологии — от классических пионеров до эпохи искусственного интеллекта.",
+    hero_btn:"Узнать о пионерах →", timeline_title:"Хронология", timeline_sub:"Вехи, изменившие вычислительную технику и мир.",
+    people_title:"Исторические личности", people_sub:"Нажмите на карточку, чтобы увидеть полную биографию.",
+    inv_title:"Великие изобретения", inv_sub:"Идеи, изменившие ход истории.",
+    footer:"© 2026 — Полная история информатики и её пионеров",
+    bio_label:"Биография и контекст", contrib_label:"Основные вклад", quote_label:"Цитата",
+    a11y_title:"Доступность", a11y_font:"Размер шрифта", a11y_img:"Размер изображений",
+    font_normal:"Обычный", font_large:"Крупный", font_xlarge:"Очень крупный",
+    img_normal:"Обычный", img_large:"Крупный", img_xlarge:"Очень крупный", a11y_close:"Закрыть",
+    see_bio:"Полная биография и достижения", chat_title:"Чат о пионерах", chat_ph:"Спросите о пионере...", chat_send:"Отправить",
+    chat_welcome:"Здравствуйте! Я могу ответить на вопросы о пионерах информатики. Выберите готовый вопрос или напишите свой."
+  }
+};
+
+const baseImg = "https://robertojunior25-git.github.io/1DS_historia_informatica/";
+
+const pioneers = [
+  { id:"lovelace", name:{pt:"Ada Lovelace",en:"Ada Lovelace",es:"Ada Lovelace",fr:"Ada Lovelace",ru:"Ада Лавлейс"}, fullName:"Augusta Ada King, Countess of Lovelace", dates:"1815 – 1852",
+    nationality:{pt:"Britânica",en:"British",es:"Británica",fr:"Britannique",ru:"Британка"},
+    short:{pt:"Matemática britânica que escreveu o primeiro algoritmo para a Máquina Analítica de Babbage.",en:"British mathematician who wrote the first algorithm for Babbage's Analytical Engine.",es:"Matemática británica que escribió el primer algoritmo para la Máquina Analítica de Babbage.",fr:"Mathématicienne britannique qui a écrit le premier algorithme pour la machine analytique de Babbage.",ru:"Британский математик, написавшая первый алгоритм для Аналитической машины Бэббиджа."},
+    img: baseImg+"Imagem_Ada%20Lovelace.png",
+    bio:{pt:"Filha de Lord Byron. Em 1843 descreveu o primeiro algoritmo destinado a uma máquina e previu usos além de cálculos numéricos.",en:"Daughter of Lord Byron. In 1843 she described the first algorithm intended for a machine and foresaw uses beyond numerical calculation.",es:"Hija de Lord Byron. En 1843 describió el primer algoritmo destinado a una máquina.",fr:"Fille de Lord Byron. En 1843 elle a décrit le premier algorithme destiné à une machine.",ru:"Дочь лорда Байрона. В 1843 году описала первый алгоритм для машины и предвидела применения за пределами числовых расчётов."},
+    contrib:{pt:"Primeiro algoritmo; visão do potencial não numérico dos computadores.",en:"First algorithm; vision of non-numerical potential of computers.",es:"Primer algoritmo; visión del potencial no numérico.",fr:"Premier algorithme ; vision du potentiel non numérique.",ru:"Первый алгоритм; видение нечислового потенциала компьютеров."},
+    quote:"The Analytical Engine weaves algebraic patterns, just as the Jacquard loom weaves flowers and leaves.",
+    keywords:["ada","lovelace","algoritmo","primeira programadora","analytical"]
+  },
+  { id:"babbage", name:{pt:"Charles Babbage",en:"Charles Babbage",es:"Charles Babbage",fr:"Charles Babbage",ru:"Чарльз Бэббидж"}, fullName:"Charles Babbage", dates:"1791 – 1871",
+    nationality:{pt:"Britânico",en:"British",es:"Británico",fr:"Britannique",ru:"Британец"},
+    short:{pt:"Conhecido como o pai do computador por projetar a Máquina Analítica.",en:"Known as the father of the computer for designing the Analytical Engine.",es:"Conocido como el padre de la computadora.",fr:"Connu comme le père de l'ordinateur.",ru:"Известен как отец компьютера за проект Аналитической машины."},
+    img: baseImg+"Imagem_Charles%20Babbage.png",
+    bio:{pt:"Projetou a Máquina Diferencial e a Máquina Analítica, o primeiro conceito de computador programável de propósito geral.",en:"Designed the Difference Engine and the Analytical Engine, the first concept of a general-purpose programmable computer.",es:"Diseñó la Máquina Diferencial y la Máquina Analítica.",fr:"A conçu la machine à différences et la machine analytique.",ru:"Спроектировал Разностную и Аналитическую машины — первый концепт универсального программируемого компьютера."},
+    contrib:{pt:"Máquina Diferencial e Analítica; conceito de computador programável.",en:"Difference and Analytical Engines; programmable computer concept.",es:"Máquinas Diferencial y Analítica.",fr:"Machines à différences et analytique.",ru:"Разностная и Аналитическая машины."},
+    quote:null, keywords:["babbage","máquina analítica","pai do computador","difference"]
+  },
+  { id:"turing", name:{pt:"Alan Turing",en:"Alan Turing",es:"Alan Turing",fr:"Alan Turing",ru:"Алан Тьюринг"}, fullName:"Alan Mathison Turing", dates:"1912 – 1954",
+    nationality:{pt:"Britânico",en:"British",es:"Británico",fr:"Britannique",ru:"Британец"},
+    short:{pt:"Formalizou a computação e ajudou a quebrar o código Enigma na Segunda Guerra.",en:"Formalized computing and helped break the Enigma code in World War II.",es:"Formalizó la computación y ayudó a descifrar Enigma.",fr:"A formalisé l'informatique et aidé à briser Enigma.",ru:"Формализовал понятие вычислений и помог взломать код Энигмы."},
+    img: baseImg+"Imagem_Alan%20Turing.png",
+    bio:{pt:"Criou a Máquina de Turing (1936), liderou a quebra do Enigma e propôs o Teste de Turing. Pai da ciência da computação e da IA.",en:"Created the Turing Machine (1936), led Enigma breaking and proposed the Turing Test. Father of computer science and AI.",es:"Creó la Máquina de Turing y lideró el descifrado de Enigma.",fr:"A créé la machine de Turing et dirigé le déchiffrement d'Enigma.",ru:"Создал машину Тьюринга (1936), руководил взломом Энигмы и предложил тест Тьюринга."},
+    contrib:{pt:"Máquina de Turing; Enigma; Teste de Turing; fundamentos da IA.",en:"Turing Machine; Enigma; Turing Test; foundations of AI.",es:"Máquina de Turing; Enigma; Prueba de Turing.",fr:"Machine de Turing ; Enigma ; test de Turing.",ru:"Машина Тьюринга; Энигма; тест Тьюринга."},
+    quote:"We can only see a short distance ahead, but we can see plenty there that needs to be done.",
+    keywords:["turing","enigma","teste de turing","máquina de turing","ia","ai"]
+  },
+  { id:"hopper", name:{pt:"Grace Hopper",en:"Grace Hopper",es:"Grace Hopper",fr:"Grace Hopper",ru:"Грейс Хоппер"}, fullName:"Grace Brewster Murray Hopper", dates:"1906 – 1992",
+    nationality:{pt:"Americana",en:"American",es:"Estadounidense",fr:"Américaine",ru:"Американка"},
+    short:{pt:"Criou o primeiro compilador e participou do desenvolvimento do COBOL.",en:"Created the first compiler and participated in COBOL development.",es:"Creó el primer compilador y participó en COBOL.",fr:"A créé le premier compilateur et participé à COBOL.",ru:"Создала первый компилятор и участвовала в разработке COBOL."},
+    img: baseImg+"Imagem_Grace%20Hopper.png",
+    bio:{pt:"Uma das primeiras programadoras do Mark I. Desenvolveu o primeiro compilador e liderou o COBOL. Popularizou o termo debugging.",en:"One of the first Mark I programmers. Developed the first compiler and led COBOL. Popularized debugging.",es:"Una de las primeras programadoras del Mark I. Desarrolló el primer compilador.",fr:"Une des premières programmeuses du Mark I. A développé le premier compilateur.",ru:"Одна из первых программистов Mark I. Разработала первый компилятор и возглавила COBOL."},
+    contrib:{pt:"Primeiro compilador; COBOL; debugging.",en:"First compiler; COBOL; debugging.",es:"Primer compilador; COBOL.",fr:"Premier compilateur ; COBOL.",ru:"Первый компилятор; COBOL; отладка."},
+    quote:"The most dangerous phrase is: We've always done it this way.",
+    keywords:["hopper","cobol","compilador","debugging","bug"]
+  },
+  { id:"hamilton", name:{pt:"Margaret Hamilton",en:"Margaret Hamilton",es:"Margaret Hamilton",fr:"Margaret Hamilton",ru:"Маргарет Гамильтон"}, fullName:"Margaret Heafield Hamilton", dates:"1936 – presente",
+    nationality:{pt:"Americana",en:"American",es:"Estadounidense",fr:"Américaine",ru:"Американка"},
+    short:{pt:"Liderou o software da Apollo 11 e cunhou o termo engenharia de software.",en:"Led Apollo 11 software and coined the term software engineering.",es:"Lideró el software del Apolo 11.",fr:"A dirigé le logiciel d'Apollo 11.",ru:"Руководила ПО Apollo 11 и ввела термин «программная инженерия»."},
+    img: baseImg+"Imagem_Margaret%20Hamilton.png",
+    bio:{pt:"Liderou a equipe de software de voo da Apollo. Seu rigor salvou a Apollo 11 de uma sobrecarga do computador.",en:"Led the Apollo flight software team. Her rigor saved Apollo 11 from a computer overload.",es:"Lideró el equipo de software de vuelo del Apolo.",fr:"A dirigé l'équipe logicielle de vol d'Apollo.",ru:"Руководила командой ПО полёта Apollo. Её строгость спасла Apollo 11."},
+    contrib:{pt:"Software da Apollo; engenharia de software de missão crítica.",en:"Apollo software; mission-critical software engineering.",es:"Software del Apolo.",fr:"Logiciel Apollo.",ru:"ПО Apollo; критическая программная инженерия."},
+    quote:null, keywords:["hamilton","apollo","engenharia de software","nasa"]
+  },
+  { id:"johnson", name:{pt:"Katherine Johnson",en:"Katherine Johnson",es:"Katherine Johnson",fr:"Katherine Johnson",ru:"Кэтрин Джонсон"}, fullName:"Katherine Coleman Goble Johnson", dates:"1918 – 2020",
+    nationality:{pt:"Americana",en:"American",es:"Estadounidense",fr:"Américaine",ru:"Американка"},
+    short:{pt:"Matemática da NASA cujos cálculos foram essenciais para os primeiros voos espaciais tripulados.",en:"NASA mathematician whose calculations were essential for early manned space flights.",es:"Matemática de la NASA cuyos cálculos fueron esenciales.",fr:"Mathématicienne de la NASA dont les calculs furent essentiels.",ru:"Математик NASA, чьи расчёты были критичны для первых пилотируемых полётов."},
+    img: baseImg+"Imagem_Katherine%20Johnson.png",
+    bio:{pt:"Uma das 'computadoras humanas' da NASA. Calculou trajetórias para Shepard, Glenn e Apollo 11.",en:"One of NASA's 'human computers'. Calculated trajectories for Shepard, Glenn and Apollo 11.",es:"Una de las 'computadoras humanas' de la NASA.",fr:"Une des « ordinateurs humains » de la NASA.",ru:"Одна из «человеческих компьютеров» NASA. Рассчитывала траектории для Шепарда, Гленна и Apollo 11."},
+    contrib:{pt:"Cálculos orbitais críticos para o programa espacial americano.",en:"Critical orbital calculations for the American space program.",es:"Cálculos orbitales críticos.",fr:"Calculs orbitaux critiques.",ru:"Критические орбитальные расчёты."},
+    quote:null, keywords:["johnson","katherine","nasa","apollo","hidden figures"]
+  },
+  { id:"vonneumann", name:{pt:"John von Neumann",en:"John von Neumann",es:"John von Neumann",fr:"John von Neumann",ru:"Джон фон Нейман"}, fullName:"John von Neumann", dates:"1903 – 1957",
+    nationality:{pt:"Húngaro-americano",en:"Hungarian-American",es:"Húngaro-estadounidense",fr:"Hungaro-américain",ru:"Венгро-американец"},
+    short:{pt:"Estruturou a arquitetura moderna de computadores (programa armazenado).",en:"Structured modern computer architecture (stored program).",es:"Estructuró la arquitectura moderna de computadoras.",fr:"A structuré l'architecture moderne des ordinateurs.",ru:"Структурировал современную архитектуру компьютеров (хранимая программа)."},
+    img: baseImg+"Imagem_John%20von%20Neumann.png",
+    bio:{pt:"Descreveu a arquitetura de von Neumann em 1945. Também contribuiu para teoria dos jogos e física.",en:"Described the von Neumann architecture in 1945. Also contributed to game theory and physics.",es:"Describió la arquitectura de von Neumann en 1945.",fr:"A décrit l'architecture de von Neumann en 1945.",ru:"Описал архитектуру фон Неймана в 1945 году. Также внёс вклад в теорию игр."},
+    contrib:{pt:"Arquitetura de von Neumann; EDVAC.",en:"Von Neumann architecture; EDVAC.",es:"Arquitectura de von Neumann.",fr:"Architecture de von Neumann.",ru:"Архитектура фон Неймана; EDVAC."},
+    quote:null, keywords:["von neumann","arquitetura","edvac","programa armazenado"]
+  },
+  { id:"bernerslee", name:{pt:"Tim Berners-Lee",en:"Tim Berners-Lee",es:"Tim Berners-Lee",fr:"Tim Berners-Lee",ru:"Тим Бернерс-Ли"}, fullName:"Sir Timothy John Berners-Lee", dates:"1955 – presente",
+    nationality:{pt:"Britânico",en:"British",es:"Británico",fr:"Britannique",ru:"Британец"},
+    short:{pt:"Inventor da World Wide Web.",en:"Inventor of the World Wide Web.",es:"Inventor de la World Wide Web.",fr:"Inventeur du World Wide Web.",ru:"Изобретатель Всемирной паутины (WWW)."},
+    img: baseImg+"Imagem_Tim%20Berners%20Lee.png",
+    bio:{pt:"Em 1989 no CERN inventou a Web. Criou HTML, HTTP e o primeiro navegador e liberou tudo publicamente.",en:"In 1989 at CERN he invented the Web. Created HTML, HTTP and the first browser and released everything publicly.",es:"En 1989 en el CERN inventó la Web.",fr:"En 1989 au CERN il a inventé le Web.",ru:"В 1989 году в CERN изобрёл Веб. Создал HTML, HTTP и первый браузер."},
+    contrib:{pt:"WWW; HTML; HTTP; URL.",en:"WWW; HTML; HTTP; URL.",es:"WWW; HTML; HTTP; URL.",fr:"WWW ; HTML ; HTTP ; URL.",ru:"WWW; HTML; HTTP; URL."},
+    quote:"The Web is more a social creation than a technical one.",
+    keywords:["berners","lee","web","www","html","http"]
+  },
+  { id:"torvalds", name:{pt:"Linus Torvalds",en:"Linus Torvalds",es:"Linus Torvalds",fr:"Linus Torvalds",ru:"Линус Торвальдс"}, fullName:"Linus Benedict Torvalds", dates:"1969 – presente",
+    nationality:{pt:"Finlandês-americano",en:"Finnish-American",es:"Finés-estadounidense",fr:"Finno-américain",ru:"Финно-американец"},
+    short:{pt:"Criador do Linux e do Git.",en:"Creator of Linux and Git.",es:"Creador de Linux y Git.",fr:"Créateur de Linux et de Git.",ru:"Создатель Linux и Git."},
+    img: baseImg+"Imagem_Linus%20Torvalds.png",
+    bio:{pt:"Em 1991 lançou o Linux. Em 2005 criou o Git. Seu modelo open-source transformou a indústria.",en:"In 1991 launched Linux. In 2005 created Git. His open-source model transformed the industry.",es:"En 1991 lanzó Linux. En 2005 creó Git.",fr:"En 1991 a lancé Linux. En 2005 a créé Git.",ru:"В 1991 запустил Linux. В 2005 создал Git. Его open-source модель изменила индустрию."},
+    contrib:{pt:"Linux; Git; modelo open-source.",en:"Linux; Git; open-source model.",es:"Linux; Git.",fr:"Linux ; Git.",ru:"Linux; Git; модель open-source."},
+    quote:"Software is like sex: it's better when it's free.",
+    keywords:["torvalds","linux","git","open source"]
+  },
+  { id:"perlman", name:{pt:"Radia Perlman",en:"Radia Perlman",es:"Radia Perlman",fr:"Radia Perlman",ru:"Радия Перлман"}, fullName:"Radia Joy Perlman", dates:"1951 – presente",
+    nationality:{pt:"Americana",en:"American",es:"Estadounidense",fr:"Américaine",ru:"Американка"},
+    short:{pt:"Inventou o Spanning Tree Protocol (STP), essencial para redes Ethernet.",en:"Invented the Spanning Tree Protocol (STP), essential for Ethernet networks.",es:"Inventó el Spanning Tree Protocol (STP).",fr:"A inventé le Spanning Tree Protocol (STP).",ru:"Изобрела протокол Spanning Tree (STP), важный для сетей Ethernet."},
+    img: baseImg+"Imagem_Radia%20Perlman.png",
+    bio:{pt:"Conhecida como a 'mãe da internet'. Seu protocolo STP permite redes Ethernet complexas sem loops.",en:"Known as the 'mother of the internet'. Her STP protocol allows complex Ethernet networks without loops.",es:"Conocida como la 'madre de internet'.",fr:"Connue comme la « mère d'internet ».",ru:"Известна как «мать интернета». Её протокол STP позволяет сложным Ethernet-сетям работать без петель."},
+    contrib:{pt:"Spanning Tree Protocol.",en:"Spanning Tree Protocol.",es:"Spanning Tree Protocol.",fr:"Spanning Tree Protocol.",ru:"Протокол Spanning Tree."},
+    quote:null, keywords:["perlman","stp","spanning tree","rede","ethernet"]
+  },
+  { id:"gates", name:{pt:"Bill Gates",en:"Bill Gates",es:"Bill Gates",fr:"Bill Gates",ru:"Билл Гейтс"}, fullName:"William Henry Gates III", dates:"1955 – presente",
+    nationality:{pt:"Americano",en:"American",es:"Estadounidense",fr:"Américain",ru:"Американец"},
+    short:{pt:"Cofundador da Microsoft. Popularizou os PCs com o Windows.",en:"Co-founder of Microsoft. Popularized PCs with Windows.",es:"Cofundador de Microsoft. Popularizó los PC con Windows.",fr:"Cofondateur de Microsoft. A popularisé les PC avec Windows.",ru:"Сооснователь Microsoft. Популяризировал ПК с помощью Windows."},
+    img: baseImg+"Imagem_Bill%20Gates.png",
+    bio:{pt:"Fundou a Microsoft com Paul Allen. MS-DOS e Windows tornaram-se padrões quase universais.",en:"Founded Microsoft with Paul Allen. MS-DOS and Windows became nearly universal standards.",es:"Fundó Microsoft con Paul Allen.",fr:"A fondé Microsoft avec Paul Allen.",ru:"Основал Microsoft вместе с Полом Алленом. MS-DOS и Windows стали почти универсальными стандартами."},
+    contrib:{pt:"Microsoft; MS-DOS; Windows.",en:"Microsoft; MS-DOS; Windows.",es:"Microsoft; MS-DOS; Windows.",fr:"Microsoft ; MS-DOS ; Windows.",ru:"Microsoft; MS-DOS; Windows."},
+    quote:null, keywords:["gates","microsoft","windows","ms-dos"]
+  },
+  { id:"jobs", name:{pt:"Steve Jobs",en:"Steve Jobs",es:"Steve Jobs",fr:"Steve Jobs",ru:"Стив Джобс"}, fullName:"Steven Paul Jobs", dates:"1955 – 2011",
+    nationality:{pt:"Americano",en:"American",es:"Estadounidense",fr:"Américain",ru:"Американец"},
+    short:{pt:"Cofundador da Apple. Revolucionou interfaces e dispositivos móveis.",en:"Co-founder of Apple. Revolutionized interfaces and mobile devices.",es:"Cofundador de Apple. Revolucionó interfaces y dispositivos móviles.",fr:"Cofondateur d'Apple. A révolutionné les interfaces et les appareils mobiles.",ru:"Сооснователь Apple. Революционизировал интерфейсы и мобильные устройства."},
+    img: baseImg+"Imagem_Steve%20Jobs.png",
+    bio:{pt:"Co-fundou a Apple. Liderou Macintosh, iPod, iPhone e iPad, transformando várias indústrias.",en:"Co-founded Apple. Led Macintosh, iPod, iPhone and iPad, transforming multiple industries.",es:"Cofundó Apple. Lideró Macintosh, iPod, iPhone e iPad.",fr:"A cofondé Apple. A dirigé Macintosh, iPod, iPhone et iPad.",ru:"Соосновал Apple. Руководил Macintosh, iPod, iPhone и iPad, изменив целые отрасли."},
+    contrib:{pt:"Apple; Macintosh; iPhone; iPad.",en:"Apple; Macintosh; iPhone; iPad.",es:"Apple; Macintosh; iPhone; iPad.",fr:"Apple ; Macintosh ; iPhone ; iPad.",ru:"Apple; Macintosh; iPhone; iPad."},
+    quote:"The only way to do great work is to love what you do.",
+    keywords:["jobs","apple","iphone","macintosh","ipad"]
+  }
+];
+
+const faqExtra = {
+  pt: [
+    { q: "Quem inventou a internet?", a: "A internet como rede de redes surgiu de projetos como ARPANET. Tim Berners-Lee inventou a World Wide Web (WWW) em 1989, que popularizou o acesso à informação na internet." },
+    { q: "Qual foi o primeiro computador?", a: "Não há um único 'primeiro'. O Z3 de Konrad Zuse (1941) é considerado o primeiro computador digital programável funcional. O ENIAC (1945-46) foi o primeiro eletrônico de grande escala nos EUA." },
+    { q: "O que é o Teste de Turing?", a: "Proposto por Alan Turing em 1950, é um critério para avaliar se uma máquina pode exibir comportamento inteligente indistinguível do de um humano em uma conversa." },
+    { q: "Quem criou o primeiro bug?", a: "Grace Hopper popularizou o termo 'bug' e 'debugging' após encontrar uma mariposa real causando falha em um relé do computador Harvard Mark II em 1947." },
+    { q: "Por que Ada Lovelace é importante?", a: "Ela escreveu o primeiro algoritmo destinado a uma máquina e previu que computadores poderiam ir além de cálculos, inclusive gerando música e gráficos." }
+  ],
+  en: [
+    { q: "Who invented the internet?", a: "The internet as a network of networks grew from projects like ARPANET. Tim Berners-Lee invented the World Wide Web in 1989, which popularized access to information on the internet." },
+    { q: "What was the first computer?", a: "There isn't a single 'first'. Konrad Zuse's Z3 (1941) is considered the first working programmable digital computer. ENIAC (1945-46) was the first large-scale electronic computer in the US." },
+    { q: "What is the Turing Test?", a: "Proposed by Alan Turing in 1950, it is a criterion to assess whether a machine can exhibit intelligent behavior indistinguishable from a human in conversation." },
+    { q: "Who created the first bug?", a: "Grace Hopper popularized the terms 'bug' and 'debugging' after finding a real moth causing a failure in a Harvard Mark II relay in 1947." },
+    { q: "Why is Ada Lovelace important?", a: "She wrote the first algorithm intended for a machine and foresaw that computers could go beyond calculation, including generating music and graphics." }
+  ],
+  es: [
+    { q: "¿Quién inventó internet?", a: "Internet como red de redes surgió de proyectos como ARPANET. Tim Berners-Lee inventó la World Wide Web en 1989." },
+    { q: "¿Cuál fue la primera computadora?", a: "No hay una única. El Z3 de Konrad Zuse (1941) se considera la primera computadora digital programable funcional. El ENIAC fue el primero electrónico a gran escala en EE.UU." },
+    { q: "¿Qué es la Prueba de Turing?", a: "Propuesta por Alan Turing en 1950, evalúa si una máquina puede mostrar comportamiento inteligente indistinguible de un humano." },
+    { q: "¿Quién creó el primer bug?", a: "Grace Hopper popularizó el término tras encontrar una polilla real causando un fallo en 1947." },
+    { q: "¿Por qué es importante Ada Lovelace?", a: "Escribió el primer algoritmo para una máquina y predijo usos más allá de los cálculos numéricos." }
+  ],
+  fr: [
+    { q: "Qui a inventé Internet ?", a: "Internet en tant que réseau de réseaux est issu de projets comme ARPANET. Tim Berners-Lee a inventé le World Wide Web en 1989." },
+    { q: "Quel a été le premier ordinateur ?", a: "Il n'y en a pas un seul. Le Z3 de Konrad Zuse (1941) est considéré comme le premier ordinateur numérique programmable fonctionnel." },
+    { q: "Qu'est-ce que le test de Turing ?", a: "Proposé par Alan Turing en 1950, c'est un critère pour évaluer si une machine peut avoir un comportement intelligent indistinguable d'un humain." },
+    { q: "Qui a créé le premier bug ?", a: "Grace Hopper a popularisé le terme après avoir trouvé un vrai papillon de nuit causant une panne en 1947." },
+    { q: "Pourquoi Ada Lovelace est-elle importante ?", a: "Elle a écrit le premier algorithme destiné à une machine et a prévu des usages au-delà du calcul numérique." }
+  ],
+  ru: [
+    { q: "Кто изобрёл интернет?", a: "Интернет как сеть сетей вырос из проектов вроде ARPANET. Тим Бернерс-Ли изобрёл Всемирную паутину (WWW) в 1989 году." },
+    { q: "Какой был первый компьютер?", a: "Единого «первого» нет. Z3 Конрада Цузе (1941) считается первым работающим программируемым цифровым компьютером. ENIAC — первым крупным электронным в США." },
+    { q: "Что такое тест Тьюринга?", a: "Предложен Аланом Тьюрингом в 1950 году — критерий, может ли машина демонстрировать разумное поведение, неотличимое от человеческого." },
+    { q: "Кто придумал первый баг?", a: "Грейс Хоппер популяризировала термин «bug» после того, как в 1947 году нашли настоящую моль, вызвавшую сбой." },
+    { q: "Почему важна Ада Лавлейс?", a: "Она написала первый алгоритм для машины и предвидела, что компьютеры смогут делать больше, чем просто считать." }
+  ]
+};
+
+const timelineData = [
+  { year:"1837–1871", title:{pt:"Máquinas de Babbage",en:"Babbage's Machines",es:"Máquinas de Babbage",fr:"Machines de Babbage",ru:"Машины Бэббиджа"}, desc:{pt:"Conceito de computador programável.",en:"Programmable computer concept.",es:"Concepto de computadora programable.",fr:"Concept d'ordinateur programmable.",ru:"Концепт программируемого компьютера."} },
+  { year:"1843", title:{pt:"Primeiro Algoritmo",en:"First Algorithm",es:"Primer Algoritmo",fr:"Premier Algorithme",ru:"Первый алгоритм"}, desc:{pt:"Ada Lovelace escreve o primeiro algoritmo para máquina.",en:"Ada Lovelace writes the first algorithm for a machine.",es:"Ada Lovelace escribe el primer algoritmo.",fr:"Ada Lovelace écrit le premier algorithme.",ru:"Ада Лавлейс пишет первый алгоритм для машины."} },
+  { year:"1936", title:{pt:"Máquina de Turing",en:"Turing Machine",es:"Máquina de Turing",fr:"Machine de Turing",ru:"Машина Тьюринга"}, desc:{pt:"Formalização da computação.",en:"Formalization of computing.",es:"Formalización de la computación.",fr:"Formalisation de l'informatique.",ru:"Формализация вычислений."} },
+  { year:"1943–1946", title:{pt:"ENIAC e Colossus",en:"ENIAC and Colossus",es:"ENIAC y Colossus",fr:"ENIAC et Colossus",ru:"ENIAC и Colossus"}, desc:{pt:"Primeiros computadores eletrônicos de grande escala.",en:"First large-scale electronic computers.",es:"Primeras computadoras electrónicas a gran escala.",fr:"Premiers ordinateurs électroniques à grande échelle.",ru:"Первые крупные электронные компьютеры."} },
+  { year:"1945", title:{pt:"Arquitetura von Neumann",en:"von Neumann Architecture",es:"Arquitectura von Neumann",fr:"Architecture von Neumann",ru:"Архитектура фон Неймана"}, desc:{pt:"Programa armazenado na memória.",en:"Stored-program architecture.",es:"Programa almacenado en memoria.",fr:"Architecture à programme stocké.",ru:"Архитектура с хранимой программой."} },
+  { year:"1969–1971", title:{pt:"Unix e C",en:"Unix and C",es:"Unix y C",fr:"Unix et C",ru:"Unix и C"}, desc:{pt:"Pilares do software moderno.",en:"Pillars of modern software.",es:"Pilares del software moderno.",fr:"Piliers du logiciel moderne.",ru:"Опоры современного ПО."} },
+  { year:"1976–1984", title:{pt:"Revolução do PC",en:"PC Revolution",es:"Revolución del PC",fr:"Révolution du PC",ru:"Революция ПК"}, desc:{pt:"Apple, Microsoft e IBM PC.",en:"Apple, Microsoft and IBM PC.",es:"Apple, Microsoft e IBM PC.",fr:"Apple, Microsoft et IBM PC.",ru:"Apple, Microsoft и IBM PC."} },
+  { year:"1989–1991", title:{pt:"Web e Linux",en:"Web and Linux",es:"Web y Linux",fr:"Web et Linux",ru:"Веб и Linux"}, desc:{pt:"Berners-Lee inventa a Web. Torvalds lança o Linux.",en:"Berners-Lee invents the Web. Torvalds launches Linux.",es:"Berners-Lee inventa la Web. Torvalds lanza Linux.",fr:"Berners-Lee invente le Web. Torvalds lance Linux.",ru:"Бернерс-Ли изобретает Веб. Торвальдс выпускает Linux."} },
+  { year:"1998–2009", title:{pt:"Google e Bitcoin",en:"Google and Bitcoin",es:"Google y Bitcoin",fr:"Google et Bitcoin",ru:"Google и Bitcoin"}, desc:{pt:"PageRank e o whitepaper do Bitcoin.",en:"PageRank and the Bitcoin whitepaper.",es:"PageRank y el whitepaper de Bitcoin.",fr:"PageRank et le livre blanc de Bitcoin.",ru:"PageRank и whitepaper Bitcoin."} },
+  { year:"2010–hoje", title:{pt:"Era da IA",en:"AI Era",es:"Era de la IA",fr:"Ère de l'IA",ru:"Эра ИИ"}, desc:{pt:"Aprendizado profundo e modelos generativos.",en:"Deep learning and generative models.",es:"Aprendizaje profundo y modelos generativos.",fr:"Apprentissage profond et modèles génératifs.",ru:"Глубокое обучение и генеративные модели."} }
+];
+
+const inventionsData = [
+  { title:{pt:"Máquina Analítica",en:"Analytical Engine",es:"Máquina Analítica",fr:"Machine Analytique",ru:"Аналитическая машина"}, desc:{pt:"Primeiro conceito de computador programável de propósito geral.",en:"First concept of a general-purpose programmable computer.",es:"Primer concepto de computadora programable.",fr:"Premier concept d'ordinateur programmable.",ru:"Первый концепт универсального программируемого компьютера."} },
+  { title:{pt:"Máquina de Turing",en:"Turing Machine",es:"Máquina de Turing",fr:"Machine de Turing",ru:"Машина Тьюринга"}, desc:{pt:"Modelo que define o que é computável.",en:"Model that defines what is computable.",es:"Modelo que define lo computable.",fr:"Modèle qui définit ce qui est calculable.",ru:"Модель, определяющая вычислимость."} },
+  { title:{pt:"Arquitetura von Neumann",en:"von Neumann Architecture",es:"Arquitectura von Neumann",fr:"Architecture von Neumann",ru:"Архитектура фон Неймана"}, desc:{pt:"Programa e dados na mesma memória.",en:"Program and data in the same memory.",es:"Programa y datos en la misma memoria.",fr:"Programme et données dans la même mémoire.",ru:"Программа и данные в одной памяти."} },
+  { title:{pt:"Compilador e COBOL",en:"Compiler and COBOL",es:"Compilador y COBOL",fr:"Compilateur et COBOL",ru:"Компилятор и COBOL"}, desc:{pt:"Grace Hopper tornou a programação mais acessível.",en:"Grace Hopper made programming more accessible.",es:"Grace Hopper hizo la programación más accesible.",fr:"Grace Hopper a rendu la programmation plus accessible.",ru:"Грейс Хоппер сделала программирование доступнее."} },
+  { title:{pt:"Unix e C",en:"Unix and C",es:"Unix y C",fr:"Unix et C",ru:"Unix и C"}, desc:{pt:"Base de quase todo o software moderno.",en:"Foundation of almost all modern software.",es:"Base de casi todo el software moderno.",fr:"Base de presque tout le logiciel moderne.",ru:"Основа почти всего современного ПО."} },
+  { title:{pt:"Software da Apollo",en:"Apollo Software",es:"Software del Apolo",fr:"Logiciel Apollo",ru:"ПО Apollo"}, desc:{pt:"Margaret Hamilton e a engenharia de software de missão crítica.",en:"Margaret Hamilton and mission-critical software engineering.",es:"Margaret Hamilton y la ingeniería de software crítica.",fr:"Margaret Hamilton et l'ingénierie logicielle critique.",ru:"Маргарет Гамильтон и критическая программная инженерия."} },
+  { title:{pt:"World Wide Web",en:"World Wide Web",es:"World Wide Web",fr:"World Wide Web",ru:"Всемирная паутина"}, desc:{pt:"Sistema de hipertexto de Tim Berners-Lee.",en:"Hypertext system by Tim Berners-Lee.",es:"Sistema de hipertexto de Tim Berners-Lee.",fr:"Système hypertexte de Tim Berners-Lee.",ru:"Гипертекстовая система Тима Бернерса-Ли."} },
+  { title:{pt:"Spanning Tree Protocol",en:"Spanning Tree Protocol",es:"Spanning Tree Protocol",fr:"Spanning Tree Protocol",ru:"Spanning Tree Protocol"}, desc:{pt:"Radia Perlman e redes Ethernet sem loops.",en:"Radia Perlman and loop-free Ethernet networks.",es:"Radia Perlman y redes Ethernet sin bucles.",fr:"Radia Perlman et réseaux Ethernet sans boucles.",ru:"Радия Перлман и Ethernet-сети без петель."} },
+  { title:{pt:"Linux e Git",en:"Linux and Git",es:"Linux y Git",fr:"Linux et Git",ru:"Linux и Git"}, desc:{pt:"Kernel e versionamento open-source de Linus Torvalds.",en:"Open-source kernel and versioning by Linus Torvalds.",es:"Núcleo y versionado open-source de Linus Torvalds.",fr:"Noyau et versionnement open-source de Linus Torvalds.",ru:"Ядро и система версий open-source Линуса Торвальдса."} },
+  { title:{pt:"PageRank",en:"PageRank",es:"PageRank",fr:"PageRank",ru:"PageRank"}, desc:{pt:"Algoritmo que organizou a busca na web.",en:"Algorithm that organized web search.",es:"Algoritmo que organizó la búsqueda web.",fr:"Algorithme qui a organisé la recherche web.",ru:"Алгоритм, организовавший поиск в сети."} }
+];
+
+let currentLang = localStorage.getItem('lang') || 'pt';
+let currentFont = localStorage.getItem('fontScale') || '1';
+let currentImg = localStorage.getItem('imgScale') || '1';
+
+function applyI18n() {
+  const t = i18n[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key]) el.placeholder = t[key];
+  });
+  document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : currentLang;
+  document.getElementById('langBtn').textContent = {pt:'🇧🇷',en:'🇺🇸',es:'🇪🇸',fr:'🇫🇷',ru:'🇷🇺'}[currentLang];
+  document.querySelectorAll('.lang-option').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
+  renderTimeline();
+  renderCards();
+  renderInventions();
+  renderChatSuggestions();
+}
+
+function renderTimeline() {
+  document.getElementById('timelineContainer').innerHTML = timelineData.map(item => `
+    <div class="timeline-item fade-up">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-year">${item.year}</div>
+        <h3>${item.title[currentLang]}</h3>
+        <p>${item.desc[currentLang]}</p>
+      </div>
+    </div>`).join('');
+  observeFadeUps();
+}
+
+function renderCards() {
+  const t = i18n[currentLang];
+  document.getElementById('cardsGrid').innerHTML = pioneers.map(p => `
+    <article class="card fade-up" data-name="${p.name[currentLang].toLowerCase()}" data-keywords="${(p.keywords||[]).join(' ')}">
+      <img class="card-img" src="${p.img}" alt="${p.name[currentLang]}" loading="lazy"
+           onerror="this.style.display='none'">
+      <div class="card-body">
+        <h3>${p.name[currentLang]}</h3>
+        <div class="card-meta">${p.dates}</div>
+        <p>${p.short[currentLang]}</p>
+        <button class="card-btn" data-id="${p.id}">${t.see_bio}</button>
+      </div>
+    </article>`).join('');
+  document.querySelectorAll('.card-btn').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.id)));
+  observeFadeUps();
+  filterCards(document.getElementById('searchInput').value);
+}
+
+function renderInventions() {
+  document.getElementById('inventionsGrid').innerHTML = inventionsData.map(item => `
+    <div class="invention-card fade-up">
+      <h3>${item.title[currentLang]}</h3>
+      <p>${item.desc[currentLang]}</p>
+    </div>`).join('');
+  observeFadeUps();
+}
+
+function openModal(id) {
+  const p = pioneers.find(x => x.id === id);
+  if (!p) return;
+  const img = document.getElementById('modalImg');
+  img.src = p.img; img.alt = p.name[currentLang]; img.style.display = '';
+  document.getElementById('modalName').textContent = p.fullName;
+  document.getElementById('modalMeta').textContent = `${p.dates} · ${p.nationality[currentLang]}`;
+  document.getElementById('modalBio').textContent = p.bio[currentLang];
+  document.getElementById('modalContrib').textContent = p.contrib[currentLang];
+  const qs = document.getElementById('modalQuoteSection');
+  if (p.quote) {
+    document.getElementById('modalQuote').textContent = `"${p.quote}"`;
+    qs.style.display = 'block';
+  } else qs.style.display = 'none';
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function filterCards(query) {
+  const q = (query || '').toLowerCase().trim();
+  document.querySelectorAll('.card').forEach(card => {
+    const name = card.dataset.name || '';
+    const kw = card.dataset.keywords || '';
+    card.classList.toggle('hidden', q && !name.includes(q) && !kw.includes(q));
+  });
+}
+document.getElementById('searchInput').addEventListener('input', e => filterCards(e.target.value));
+
+function applyFont(s) {
+  currentFont = s;
+  document.documentElement.style.setProperty('--font-scale', s);
+  localStorage.setItem('fontScale', s);
+  document.querySelectorAll('[data-font]').forEach(b => b.classList.toggle('active', b.dataset.font === s));
+}
+function applyImg(s) {
+  currentImg = s;
+  document.documentElement.style.setProperty('--img-scale', s);
+  localStorage.setItem('imgScale', s);
+  document.querySelectorAll('[data-img]').forEach(b => b.classList.toggle('active', b.dataset.img === s));
+}
+
+function addChatMsg(text, who) {
+  const div = document.createElement('div');
+  div.className = `chat-msg ${who}`;
+  div.textContent = text;
+  document.getElementById('chatMessages').appendChild(div);
+  document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+}
+
+function renderChatSuggestions() {
+  const faqs = faqExtra[currentLang] || faqExtra.pt;
+  const chips = faqs.map(f => `<button class="chat-chip" data-q="${f.q.replace(/"/g,'"')}">${f.q}</button>`).join('');
+  const peopleChips = ['Ada Lovelace','Alan Turing','Grace Hopper','Tim Berners-Lee','Linus Torvalds','Steve Jobs']
+    .map(n => `<button class="chat-chip" data-q="${n}">${n}</button>`).join('');
+  document.getElementById('chatSuggestions').innerHTML = chips + peopleChips;
+  document.querySelectorAll('.chat-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.getElementById('chatInput').value = chip.dataset.q;
+      sendChat();
+    });
+  });
+}
+
+function answerChat(question) {
+  const q = question.toLowerCase();
+  const faqs = faqExtra[currentLang] || faqExtra.pt;
+
+  for (const f of faqs) {
+    if (q.includes(f.q.toLowerCase().slice(0, 12)) || f.q.toLowerCase().includes(q.slice(0, 10))) {
+      return f.a;
+    }
+  }
+
+  for (const p of pioneers) {
+    const names = Object.values(p.name).map(n => n.toLowerCase());
+    const hit = names.some(n => q.includes(n.split(' ')[0]) || q.includes(n)) ||
+                (p.keywords || []).some(k => q.includes(k));
+    if (hit) {
+      return `${p.name[currentLang]} (${p.dates})\n\n${p.bio[currentLang]}\n\n${i18n[currentLang].contrib_label}: ${p.contrib[currentLang]}`;
+    }
+  }
+
+  if (q.includes('web') || q.includes('www') || q.includes('internet')) {
+    return (faqExtra[currentLang] || faqExtra.pt)[0].a;
+  }
+  if (q.includes('primeiro computador') || q.includes('first computer') || q.includes('первый компьютер')) {
+    return (faqExtra[currentLang] || faqExtra.pt)[1].a;
+  }
+
+  return currentLang === 'pt'
+    ? 'Não encontrei uma resposta específica. Tente perguntar sobre Ada Lovelace, Turing, Hopper, Berners-Lee, Torvalds, Jobs ou use uma das perguntas prontas.'
+    : currentLang === 'ru'
+    ? 'Не нашёл точного ответа. Спросите об Аде Лавлейс, Тьюринге, Хоппер, Бернерсе-Ли, Торвальдсе, Джобсе или выберите готовый вопрос.'
+    : 'I could not find a specific answer. Try asking about Ada Lovelace, Turing, Hopper, Berners-Lee, Torvalds, Jobs or use a ready question.';
+}
+
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  addChatMsg(text, 'user');
+  input.value = '';
+  setTimeout(() => addChatMsg(answerChat(text), 'bot'), 350);
+}
+
+document.getElementById('chatBtn').addEventListener('click', () => {
+  const panel = document.getElementById('chatPanel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open') && document.getElementById('chatMessages').children.length === 0) {
+    addChatMsg(i18n[currentLang].chat_welcome, 'bot');
+  }
+});
+document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatPanel').classList.remove('open'));
+document.getElementById('chatSend').addEventListener('click', sendChat);
+document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+
+document.getElementById('a11yBtn').addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('a11yPanel').classList.toggle('open');
+  document.getElementById('langDropdown').classList.remove('open');
+});
+document.getElementById('a11yClose').addEventListener('click', () => document.getElementById('a11yPanel').classList.remove('open'));
+document.querySelectorAll('[data-font]').forEach(b => b.addEventListener('click', () => applyFont(b.dataset.font)));
+document.querySelectorAll('[data-img]').forEach(b => b.addEventListener('click', () => applyImg(b.dataset.img)));
+
+document.getElementById('langBtn').addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('langDropdown').classList.toggle('open');
+  document.getElementById('a11yPanel').classList.remove('open');
+});
+document.querySelectorAll('.lang-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentLang = btn.dataset.lang;
+    localStorage.setItem('lang', currentLang);
+    applyI18n();
+    document.getElementById('langDropdown').classList.remove('open');
+  });
+});
+document.addEventListener('click', () => {
+  document.getElementById('langDropdown').classList.remove('open');
+  document.getElementById('a11yPanel').classList.remove('open');
+});
+document.getElementById('a11yPanel').addEventListener('click', e => e.stopPropagation());
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target.id === 'modalOverlay') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+    document.getElementById('a11yPanel').classList.remove('open');
+    document.getElementById('langDropdown').classList.remove('open');
+    document.getElementById('chatPanel').classList.remove('open');
+  }
+});
+
+const themeBtn = document.getElementById('themeBtn');
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('theme', t);
+}
+setTheme(localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+themeBtn.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+
+function observeFadeUps() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => obs.observe(el));
+}
+
+applyFont(currentFont);
+applyImg(currentImg);
+applyI18n();
 </script>
 </body>
 </html>
